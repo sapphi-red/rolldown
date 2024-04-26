@@ -29,7 +29,8 @@ export async function initializeParallelPlugins(
     return undefined
   }
 
-  const count = Math.min(availableParallelism(), 8)
+  // leave one thread for the main thread
+  const count = Math.max(Math.min(availableParallelism(), 8) - 1, 1)
   const parallelJsPluginRegistry = new ParallelJsPluginRegistry(count)
   const registryId = parallelJsPluginRegistry.id
 
